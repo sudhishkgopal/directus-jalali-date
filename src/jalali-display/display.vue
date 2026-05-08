@@ -1,8 +1,8 @@
 <template>
   <div class="jalali-formatter">
     <span v-if="formattedDate" class="jalali-date">{{ formattedDate }}</span>
-    <span v-else-if="value" class="invalid-date">تاریخ نامعتبر</span>
-    <span v-else class="no-date">—</span>
+    <span v-else-if="value" class="invalid-date">{{ invalidDateText }}</span>
+    <span v-else class="no-date">{{ noDateText }}</span>
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import humanizeDuration from 'humanize-duration';
 import momentJalali from 'moment-jalali';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // Configure moment-jalali
 momentJalali.loadPersian({ dialect: 'persian-modern' });
@@ -27,6 +28,10 @@ const props = withDefaults(defineProps<Props>(), {
   format: 'jYYYY/jMM/jDD',
   options: () => ({}),
 });
+
+const { t } = useI18n();
+const invalidDateText = computed(() => t('invalid_date', 'Invalid date (تاریخ نامعتبر)'));
+const noDateText = computed(() => t('no_value', '—'));
 
 const formatString = computed(() => {
   // Priority: options.format > format prop > default

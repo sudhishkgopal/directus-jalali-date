@@ -7,7 +7,7 @@
         :type="pickerType"
         :format="dynamicFormat"
         :display-format="dynamicDisplayFormat"
-        :placeholder="props.placeholder"
+        :placeholder="effectivePlaceholder"
         :editable="false"
         :auto-submit="props.autoSubmit"
         :clearable="false"
@@ -48,6 +48,7 @@ import moment from 'moment-jalali';
 import 'moment-timezone';
 import 'moment/locale/fa';
 import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // Import the vue3-persian-datetime-picker component
 // Note: This should be available from the node_modules
@@ -85,8 +86,6 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'date',
-
-  placeholder: 'تاریخ را انتخاب کنید',
   editable: true,
   autoSubmit: false,
   clearable: true,
@@ -96,6 +95,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<Emits>();
+
+const { t } = useI18n();
+const effectivePlaceholder = computed(() => props.placeholder ?? t('select_date', 'Select date... (تاریخ را انتخاب کنید)'));
 
 const value = ref(props.value);
 

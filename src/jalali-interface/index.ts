@@ -3,8 +3,8 @@ import InterfaceComponent from './interface.vue';
 
 export default defineInterface({
   id: 'jalali-datepicker',
-  name: 'انتخابگر تاریخ جلالی',
-  description: 'انتخابگر تاریخ و زمان فارسی/جلالی برای Directus',
+  name: 'Jalali Date Picker (انتخابگر تاریخ جلالی)',
+  description: 'Persian/Jalali date and time picker for Directus (انتخابگر تاریخ و زمان فارسی/جلالی)',
   icon: 'today',
   component: InterfaceComponent,
   types: ['dateTime', 'date', 'time', 'timestamp'],
