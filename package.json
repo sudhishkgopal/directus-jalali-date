@@ -1,0 +1,65 @@
+{
+  "name": "jalali-date-bundle",
+  "description": "مجموعه تاریخ جلالی - انتخابگر و نمایشگر تاریخ فارسی/جلالی برای Directus | Jalali Date Bundle - Persian/Jalali Date Picker Interface and Display for Directus",
+  "icon": "today",
+  "version": "1.0.0",
+  "license": "MIT",
+  "keywords": [
+    "directus",
+    "directus-extension",
+    "directus-extension-bundle",
+    "jalali",
+    "persian",
+    "datepicker",
+    "shamsi",
+    "khorshidi",
+    "calendar",
+    "formatter",
+    "display",
+    "interface"
+  ],
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "directus:extension": {
+    "type": "bundle",
+    "path": {
+      "app": "dist/app.js",
+      "api": "dist/api.js"
+    },
+    "entries": [
+      {
+        "type": "interface",
+        "name": "jalali-datepicker",
+        "source": "src/jalali-interface/index.ts"
+      },
+      {
+        "type": "display",
+        "name": "jalali-formatter",
+        "source": "src/jalali-display/index.ts"
+      }
+    ],
+    "host": "^10.10.0"
+  },
+  "scripts": {
+    "build": "directus-extension build",
+    "dev": "directus-extension build -w --no-minify",
+    "link": "directus-extension link",
+    "validate": "directus-extension validate",
+    "add": "directus-extension add"
+  },
+  "devDependencies": {
+    "@directus/extensions-sdk": "14.0.0",
+    "@types/moment-jalaali": "^0.7.9",
+    "typescript": "^5.8.3",
+    "vue": "^3.5.17"
+  },
+  "dependencies": {
+    "humanize-duration": "^3.31.0",
+    "moment": "^2.29.4",
+    "moment-jalali": "^0.3.9",
+    "moment-timezone": "^0.6.0",
+    "vue3-persian-datetime-picker": "^1.2.2"
+  }
+}

@@ -1,0 +1,26 @@
+/* RTL support for Persian dates */
+.jalali-rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Common Persian number styles */
+.persian-numbers {
+  font-feature-settings: 'ss01' on;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Persian date formatting utilities */
+.jalali-date-display {
+  font-family: var(--jalali-font-family);
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: embed;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .jalali-date-display {
+    font-weight: 600 !important;
+  }
+}
