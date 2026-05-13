@@ -10,5 +10,36 @@ export default defineInterface({
   types: ['dateTime', 'date', 'time', 'timestamp'],
   localTypes: ['standard'],
   group: 'selection',
-  options: null,
+  options: [
+    {
+      field: 'use24',
+      name: '24-Hour Clock (فرمت ۲۴ ساعته)',
+      type: 'boolean',
+      meta: {
+        width: 'half',
+        interface: 'boolean',
+        options: {
+          label: 'Use 24-hour time format',
+        },
+      },
+      schema: {
+        default_value: true,
+      },
+    },
+    {
+      field: 'includeSeconds',
+      name: 'Include Seconds (نمایش ثانیه)',
+      type: 'boolean',
+      meta: {
+        width: 'half',
+        interface: 'boolean',
+        options: {
+          label: 'Show seconds in time picker',
+        },
+      },
+      schema: {
+        default_value: false,
+      },
+    },
+  ],
 });

@@ -68,6 +68,8 @@ interface Props {
   minDate?: string;
   maxDate?: string;
   disabled?: boolean;
+  use24?: boolean;
+  includeSeconds?: boolean;
   collection?: string;
   field?: string;
   // Directus field meta information
@@ -86,6 +88,8 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'date',
+  use24: true,
+  includeSeconds: false,
   editable: true,
   autoSubmit: false,
   clearable: true,
@@ -136,12 +140,16 @@ const dynamicFormat = computed(() => {
   const type = pickerType.value;
 
   switch (type) {
-    case 'datetime':
-      return props.format || 'YYYY-MM-DD HH:mm:ss';
+    case 'datetime': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.format || (props.use24 ? `YYYY-MM-DD HH:mm${secs}` : `YYYY-MM-DD hh:mm${secs} A`);
+    }
     case 'date':
       return props.format || 'YYYY-MM-DD';
-    case 'time':
-      return props.format || 'HH:mm:ss';
+    case 'time': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.format || (props.use24 ? `HH:mm${secs}` : `hh:mm${secs} A`);
+    }
     case 'year-month':
       return props.format || 'YYYY-MM';
     case 'year':
@@ -158,12 +166,16 @@ const dynamicDisplayFormat = computed(() => {
   const type = pickerType.value;
 
   switch (type) {
-    case 'datetime':
-      return props.displayFormat || 'jYYYY/jMM/jDD HH:mm';
+    case 'datetime': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.displayFormat || (props.use24 ? `jYYYY/jMM/jDD HH:mm${secs}` : `jYYYY/jMM/jDD hh:mm${secs} A`);
+    }
     case 'date':
       return props.displayFormat || 'jYYYY/jMM/jDD';
-    case 'time':
-      return props.displayFormat || 'HH:mm';
+    case 'time': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.displayFormat || (props.use24 ? `HH:mm${secs}` : `hh:mm${secs} A`);
+    }
     case 'year-month':
       return props.displayFormat || 'jYYYY/jMM';
     case 'year':
