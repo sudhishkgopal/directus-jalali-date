@@ -47,5 +47,5 @@ export default defineDisplay({
     },
   ],
   types: ['string', 'date', 'dateTime', 'timestamp'],
-  localTypes: ['standard'],
+  localTypes: ['standard', 'm2o'],
 });
