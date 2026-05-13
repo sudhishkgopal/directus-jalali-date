@@ -7,7 +7,7 @@
         :type="pickerType"
         :format="dynamicFormat"
         :display-format="dynamicDisplayFormat"
-        :placeholder="props.placeholder"
+        :placeholder="effectivePlaceholder"
         :editable="false"
         :auto-submit="props.autoSubmit"
         :clearable="false"
@@ -48,6 +48,7 @@ import moment from 'moment-jalali';
 import 'moment-timezone';
 import 'moment/locale/fa';
 import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 // Import the vue3-persian-datetime-picker component
 // Note: This should be available from the node_modules
@@ -67,6 +68,8 @@ interface Props {
   minDate?: string;
   maxDate?: string;
   disabled?: boolean;
+  use24?: boolean;
+  includeSeconds?: boolean;
   collection?: string;
   field?: string;
   // Directus field meta information
@@ -85,8 +88,8 @@ interface Emits {
 
 const props = withDefaults(defineProps<Props>(), {
   type: 'date',
-
-  placeholder: 'تاریخ را انتخاب کنید',
+  use24: true,
+  includeSeconds: false,
   editable: true,
   autoSubmit: false,
   clearable: true,
@@ -96,6 +99,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<Emits>();
+
+const { t } = useI18n();
+const effectivePlaceholder = computed(() => props.placeholder ?? t('select_date', 'Select date... (تاریخ را انتخاب کنید)'));
 
 const value = ref(props.value);
 
@@ -134,12 +140,16 @@ const dynamicFormat = computed(() => {
   const type = pickerType.value;
 
   switch (type) {
-    case 'datetime':
-      return props.format || 'YYYY-MM-DD HH:mm:ss';
+    case 'datetime': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.format || (props.use24 ? `YYYY-MM-DD HH:mm${secs}` : `YYYY-MM-DD hh:mm${secs} A`);
+    }
     case 'date':
       return props.format || 'YYYY-MM-DD';
-    case 'time':
-      return props.format || 'HH:mm:ss';
+    case 'time': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.format || (props.use24 ? `HH:mm${secs}` : `hh:mm${secs} A`);
+    }
     case 'year-month':
       return props.format || 'YYYY-MM';
     case 'year':
@@ -156,12 +166,16 @@ const dynamicDisplayFormat = computed(() => {
   const type = pickerType.value;
 
   switch (type) {
-    case 'datetime':
-      return props.displayFormat || 'jYYYY/jMM/jDD HH:mm';
+    case 'datetime': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.displayFormat || (props.use24 ? `jYYYY/jMM/jDD HH:mm${secs}` : `jYYYY/jMM/jDD hh:mm${secs} A`);
+    }
     case 'date':
       return props.displayFormat || 'jYYYY/jMM/jDD';
-    case 'time':
-      return props.displayFormat || 'HH:mm';
+    case 'time': {
+      const secs = props.includeSeconds ? ':ss' : '';
+      return props.displayFormat || (props.use24 ? `HH:mm${secs}` : `hh:mm${secs} A`);
+    }
     case 'year-month':
       return props.displayFormat || 'jYYYY/jMM';
     case 'year':

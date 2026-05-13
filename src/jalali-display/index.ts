@@ -3,15 +3,15 @@ import DisplayComponent from './display.vue';
 
 export default defineDisplay({
   id: 'jalali-formatter',
-  name: 'نمایشگر تاریخ جلالی',
+  name: 'Jalali Date Display (نمایشگر تاریخ جلالی)',
   icon: 'calendar_today',
   description:
-    'تبدیل و نمایش تاریخ میلادی به شمسی/جلالی | Convert Gregorian dates to Jalali (Persian) calendar',
+    'Convert and display Gregorian dates as Jalali (Persian) calendar (تبدیل و نمایش تاریخ میلادی به شمسی/جلالی)',
   component: DisplayComponent,
   options: [
     {
       field: 'format',
-      name: 'فرمت تاریخ',
+      name: 'Date Format (فرمت تاریخ)',
       type: 'string',
       meta: {
         width: 'full',
@@ -34,12 +34,12 @@ export default defineDisplay({
               value: 'jDD jMMMM jYYYY - HH:mm',
             },
             {
-              text: 'نسبی (۲ روز پیش، یک هفته پیش)',
+              text: 'Relative (نسبی) — e.g. 2 days ago (۲ روز پیش)',
               value: 'relative',
             },
           ],
         },
-        note: 'فرمت نمایش تاریخ جلالی (j برای جلالی، M برای ماه، D برای روز، Y برای سال)',
+        note: 'Jalali display format. Use j-prefixed tokens: jYYYY=year, jMM=month, jDD=day. (فرمت نمایش تاریخ جلالی)',
       },
       schema: {
         default_value: 'jYYYY/jMM/jDD',
@@ -47,5 +47,5 @@ export default defineDisplay({
     },
   ],
   types: ['string', 'date', 'dateTime', 'timestamp'],
-  localTypes: ['standard'],
+  localTypes: ['standard', 'm2o'],
 });
